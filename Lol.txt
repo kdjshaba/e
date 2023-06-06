@@ -576,7 +576,7 @@ while sp.Parent~=nil and Humanoid and Humanoid.Parent~=nil and Humanoid.Health>0
 			chasing=true
 			Humanoid.WalkSpeed=runspeed
 		end
-		Humanoid:MoveTo(closesttarget.Position+(Vector3.new(1,1,1)*(variance*((math.random()*2)-1))),closesttarget))
+		Humanoid:MoveTo(closesttarget.Position+(Vector3.new(1,1,1)*(variance*((math.random()*2)-1))),closesttarget)
 		if math.random()<.5 then
 			attack(time,closesttarget.Position)
 		end
