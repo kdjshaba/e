@@ -1,0 +1,100 @@
+return function()
+--Converted with ttyyuu12345's model to script plugin v4
+function sandbox(var,func)
+	local env = getfenv(func)
+	local newenv = setmetatable({},{
+		__index = function(self,k)
+			if k=="script" then
+				return var
+			else
+				return env[k]
+			end
+		end,
+	})
+	setfenv(func,newenv)
+	return func
+end
+cors = {}
+mas = Instance.new("Model",game:GetService("Lighting"))
+Model0 = Instance.new("Model")
+Part1 = Instance.new("Part")
+PointLight2 = Instance.new("PointLight")
+Sound3 = Instance.new("Sound")
+PitchShiftSoundEffect4 = Instance.new("PitchShiftSoundEffect")
+EqualizerSoundEffect5 = Instance.new("EqualizerSoundEffect")
+ChorusSoundEffect6 = Instance.new("ChorusSoundEffect")
+ParticleEmitter7 = Instance.new("ParticleEmitter")
+Script8 = Instance.new("Script")
+Sound9 = Instance.new("Sound")
+Model0.Name = "A-245"
+Model0.Parent = mas
+Part1.Name = "RushNew"
+Part1.Parent = Model0
+Part1.CFrame = CFrame.new(-73, 5.0999999, -146, -1, 9.29431255e-36, -5.11779049e-28, -9.29431255e-36, 1, 0, -5.11779049e-28, 0, -1)
+Part1.Orientation = Vector3.new(0, -180, 0)
+Part1.Position = Vector3.new(-73, 5.099999904632568, -146)
+Part1.Rotation = Vector3.new(-180, 0, -180)
+Part1.Color = Color3.new(1, 0.690196, 0)
+Part1.Transparency = 1
+Part1.Size = Vector3.new(10.199999809265137, 10.199999809265137, 8)
+Part1.Anchored = true
+Part1.BottomSurface = Enum.SurfaceType.Smooth
+Part1.BrickColor = BrickColor.new("Deep orange")
+Part1.CanCollide = false
+Part1.TopSurface = Enum.SurfaceType.Smooth
+Part1.brickColor = BrickColor.new("Deep orange")
+PointLight2.Parent = Part1
+PointLight2.Color = Color3.new(0.333333, 1, 0.498039)
+PointLight2.Range = 21
+PointLight2.Brightness = 9.520000457763672
+Sound3.Parent = Part1
+Sound3.Looped = true
+Sound3.Pitch = 0.38999998569488525
+Sound3.PlaybackSpeed = 0.38999998569488525
+Sound3.SoundId = "rbxassetid://9117277530"
+Sound3.Volume = 10
+PitchShiftSoundEffect4.Parent = Sound3
+PitchShiftSoundEffect4.Octave = 0.7749999761581421
+EqualizerSoundEffect5.Parent = Sound3
+EqualizerSoundEffect5.HighGain = 10
+EqualizerSoundEffect5.LowGain = 10
+ChorusSoundEffect6.Parent = Sound3
+ChorusSoundEffect6.Depth = 0.009999999776482582
+ParticleEmitter7.Name = "Face"
+ParticleEmitter7.Parent = mas
+ParticleEmitter7.Speed = NumberRange.new(0.5, 0.5)
+ParticleEmitter7.Texture = "http://www.roblox.com/asset/?id=12198263952"
+ParticleEmitter7.Transparency = NumberSequence.new(0,0,1,0,1,0,1,0,1,0,0)
+ParticleEmitter7.ZOffset = 4
+ParticleEmitter7.Size = NumberSequence.new(4,4)
+ParticleEmitter7.Drag = 255
+ParticleEmitter7.Lifetime = NumberRange.new(0.5, 0.5)
+ParticleEmitter7.LockedToPart = true
+ParticleEmitter7.SpreadAngle = Vector2.new(360, 360)
+ParticleEmitter7.VelocitySpread = 360
+Script8.Name = "GIF"
+Script8.Parent = mas
+table.insert(cors,sandbox(Script8,function()
+while true do
+	wait(math.random(0.9,0.9))
+	script.Parent.Face.Texture = "http://www.roblox.com/asset/?id=12660255878"
+	wait(math.random(0.9,0.9))
+	script.Parent.Face.Texture = "http://www.roblox.com/asset/?id=12660223241"
+	end
+
+end))
+Sound9.Name = "Spawn"
+Sound9.Parent = Model0
+Sound9.SoundId = "rbxassetid://1289263994"
+for i,v in pairs(mas:GetChildren()) do
+	v.Parent = workspace
+	pcall(function() v:MakeJoints() end)
+end
+mas:Destroy()
+for i,v in pairs(cors) do
+	spawn(function()
+		pcall(v)
+	end)
+end
+
+end
