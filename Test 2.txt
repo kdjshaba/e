@@ -149,29 +149,66 @@ do
 	--Changing owner to fake player object to support owner:GetMouse()
 	game,owner = FakeGame,FakeGame.Players.LocalPlayer
 end
-wait(.5)
-local user=game.Players.LocalPlayer
-repeat wait() until user.Character local char=user.Character
-local humanoid=char:WaitForChild("Humanoid")
-local anim
-function playanim(id)
-	if char~=nil and humanoid~=nil then
-		local id="rbxassetid://7163876731"
-		local oldanim=char:FindFirstChild("LocalAnimation")
-		if anim~=nil then
-			anim:Stop()
-		end
-		if oldanim~=nil then
-			if oldanim.AnimationId==id then
-				oldanim:Destroy()
-				return
-			end
-			oldanim:Destroy()
-		end
-		local animation=Instance.new("Animation",char)
-		animation.Name="LocalAnimation"
-		animation.AnimationId=id
-		anim=humanoid:LoadAnimation(animation)
-		anim:Play()
-	end
+wait()
+state = {Enum.HumanoidStateType.Running,
+        Enum.HumanoidStateType.RunningNoPhysics,
+        Enum.HumanoidStateType.Jumping,
+        Enum.HumanoidStateType.Freefall,
+        Enum.HumanoidStateType.Landed
+}
+
+animations = {"7163876731", -- Running/Walking
+            "", -- Idle
+            "", -- Moving Jump
+            "", -- Idle Jump
+            "", -- Freefalling
+            "" -- Landing
+ }
+ 
+CurrentState = ""
+Animation = ""
+canPlay = true
+ 
+Player = script.Parent
+ 
+function playAnimation(Source,animation,player)
+    if canPlay then
+        local player = script.Parent.Parent
+        canPlay = false
+        local animTrack = Source.Humanoid:LoadAnimation(animation) -- Load animation into Humanoid
+        canPlay = true
+        animTrack:Play() -- Start the animation
+    end
 end
+ 
+local animation = Instance.new("Animation")
+   
+local character = Player
+local humanoid = character.Humanoid
+ 
+   
+humanoid.Running:connect(function(state)
+    if state > 3 then
+        if CurrentState ~= "Running" then
+            CurrentState = "Running"
+           
+            if animations[1] ~= "" then
+                animation.AnimationId = "http://www.roblox.com/Asset?ID=2790839297"
+                playAnimation(character,animation)
+            end
+        end
+    else
+        if CurrentState ~= "Idle" then
+            CurrentState = "Idle"
+           
+            if animations[2] ~= "" then
+	local ActiveTracks = humanoid:GetPlayingAnimationTracks()
+for _,v in pairs(ActiveTracks) do
+	v:Stop()
+end
+                animation.AnimationId = "http://www.roblox.com/Asset?ID="
+                playAnimation(character,animation)
+            end
+        end
+    end
+end)
