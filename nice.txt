@@ -34,13 +34,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Gelatekussy/GelatekRe
 wait(8)
 lol = getcustomasset or getsynasset
 getgenv().LoadLibrary = function(lib) return loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox/Core-Scripts/master/CoreScriptsRoot/Libraries/" .. lib .. ".lua"))() end
--------------------
---Brutal Overlord--
----------------------------------
---By CKbackup (Sugarie Saffron)--
----------------------------------
-
-wait(1/60)
+wait(0.2)
 Effects = { }
 local Player = game:GetService("Players").LocalPlayer
 local chara = game.Players.LocalPlayer.Character
