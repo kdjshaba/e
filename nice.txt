@@ -27,11 +27,10 @@ Global.GelatekReanimateConfig = {
     ["BulletEnabled"] = false,
     ["BulletConfig"] = {
         ["RunAfterReanimate"] = false,
-        ["LockBulletOnTorso"] = false,
+        ["LockBulletOnTorso"] = false
     }
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Gelatekussy/GelatekReanimate/main/Main.lua"))()
-wait(8)
 lol = getcustomasset or getsynasset
 getgenv().LoadLibrary = function(lib) return loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox/Core-Scripts/master/CoreScriptsRoot/Libraries/" .. lib .. ".lua"))() end
 wait(0.2)
