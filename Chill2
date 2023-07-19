@@ -81,9 +81,9 @@ end)
 v.Shape = "Block"
 text.Text = "~»Chill Af«~"
 Player = game.Players.LocalPlayer
-Character = Player.Character
-PlayerGui = Player.PlayerGui
-Backpack = Player.Backpack
+Character =  game.Players.LocalPlayer.Character
+PlayerGui = game.Players.LocalPlayer.PlayerGui
+Backpack = game.Players.LocalPlayer.Backpack
 Torso = Character.Torso
 Head = Character.Head
 Humanoid = Character.Humanoid
