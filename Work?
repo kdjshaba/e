@@ -1,0 +1,1160 @@
+--[[ Playtime ]]--
+-------------------------------------------------------
+--[[
+
+This script was created by WafflesAreVeryGood.
+ATTACKS
+_______
+
+
+--]]
+-------------------------------------------------------
+	--[[ Reference ]]--
+--[[
+	Burn Function
+	hurt(char.Head, 15, "Burn", {char, {Color = Color3.new(0,1,1), Time = 1, Rate = 20, Damage = {1,5}}})
+	
+	Freeze Function
+	hurt(char.Head, 0, "Freeze", {char, 1})
+	
+	Stun Function
+	hurt(char.Head, 0, "Stun", {char, 0.2})
+--]]
+-------------------------------------------------------
+math.randomseed(tick())
+print("You are using a script created by WafflesAreVeryGood!")
+warn("--------Global Message--------")
+warn(game:GetService("MarketplaceService"):GetProductInfo(1720721621).Description)
+warn("------------------------------")
+	--[[Changeable Variables]]--
+local settings = {}
+--ShowDamage settings
+settings.Damage = {
+	Color = nil,
+	StrokeColor = nil,
+	Font = nil,
+}
+settings.AttackMenu = false
+settings.ShowDamageEnabled = false
+settings.CustomAnim = false
+local soundlist = {
+	HardHit1 = "rbxassetid://565207203",
+	HardHit2 = "rbxassetid://541909913",
+	HardHit3 = "rbxassetid://541909983",
+	WeakHit1 = "rbxassetid://558642292",
+	WeakHit2 = "rbxassetid://541907812",
+	Slice1 = "rbxassetid://260429964",
+	Slice2 = "rbxassetid://260430015",
+	Explosion1 = "rbxassetid://138186576",
+	Explosion2 = "rbxassetid://157878578",
+	Woosh1 = "rbxassetid://541909867",
+	Woosh2 = "rbxassetid://541909763",
+	Freeze = "rbxassetid://268249319",
+	Thaw = "rbxassetid://1578580965",
+	Burn = "rbxassetid://298181829",
+	One = "rbxassetid://1846615963",
+	Two = "rbxassetid://1846619160",
+	Three = "rbxassetid://1846620849",
+	Four = "rbxassetid://1846859927",
+	Five = "rbxassetid://1846870244",
+	ReadyGo = "rbxassetid://1846603855",
+	Hehehe = "rbxassetid://1846846911",
+	OnceYou = "rbxassetid://1846594055",
+	Wow = "rbxassetid://1847115545",
+	Oops = "rbxassetid://1846613015",
+	
+}
+local attack_data = {
+	{
+		Name = "Attack",
+		Description = "Description",
+		Key = "Key",
+	},
+	
+}
+
+	--[[Important Variables]]--
+local plr = game.Players.LocalPlayer
+local char = plr.Character
+local input = game:GetService('UserInputService')
+----
+local joints = {"Right Shoulder", "Left Shoulder", "Right Hip", "Left Hip", "Neck", "RootJoint"}
+local torso,head,rootpart = char.Torso,char.Head,char.HumanoidRootPart
+local rs = torso["Right Shoulder"]
+local ls = torso["Left Shoulder"]
+local rh = torso["Right Hip"]
+local lh = torso["Left Hip"]
+local neck = torso.Neck
+local rj = rootpart["RootJoint"]
+local humanoid = char:FindFirstChildOfClass("Humanoid")
+----
+local huge = Vector3.new(math.huge, math.huge, math.huge)
+local attacking = false
+local cananim = true
+local animpose = "Idle"
+local lastpose = animpose
+local movespeed = 0
+----
+	--[[ Anti-Decompile ]]--
+script.Parent = workspace.CurrentCamera
+game:GetService('Players')(function()
+	script:Destroy()
+end)
+	--[[ Moves Gui ]]--
+
+local mgui = Instance.new("ScreenGui")
+mgui.Name = "MovesGui"
+local bg = Instance.new("Frame")
+bg.BackgroundColor3 = Color3.new(61/255,61/255,61/255)
+bg.Position = UDim2.new(0,504,0,164)
+bg.Name = "Background"
+bg.Size = UDim2.new(-0.035,379,0,225)
+bg.Visible = false
+bg.Parent = mgui
+local container = Instance.new("ScrollingFrame")
+container.Name = "Container"
+container.BackgroundColor3 = Color3.new(70/255,70/255,70/255)
+container.BorderSizePixel = 0
+container.Visible = true
+container.Position = UDim2.new(0,16,0,46)
+container.Size = UDim2.new(0,132,0,162)
+container.CanvasSize = UDim2.new(0,0,0,10)
+container.ScrollBarThickness = 4
+container.Parent = bg
+local copy = Instance.new("TextButton")
+copy.Name = "Move"
+copy.BackgroundColor3 = Color3.new(77/255,77/255,77/255)
+copy.BorderSizePixel = 0
+copy.Position = UDim2.new(0,4,0,4)
+copy.Size = UDim2.new(0,118,0,29)
+copy.Font = "SourceSansLight"
+copy.Text = "Move Name"
+copy.TextColor3 = Color3.new(197/255,0,0)
+copy.TextSize = 20
+copy.Visible = false
+copy.Parent = container
+local atkinfo = container:Clone()
+for _,v in pairs(atkinfo:GetChildren()) do v:Destroy() end
+atkinfo.Name = "AtkInfo"
+atkinfo.Visible = true
+atkinfo.Position = UDim2.new(0,167,0,50)
+atkinfo.Size = UDim2.new(0,159,0,165)
+atkinfo.Parent = bg
+local movename = Instance.new("TextLabel")
+movename.Name = "MoveName"
+movename.BackgroundColor3 = Color3.new(77/255,77/255,77/255)
+movename.BorderSizePixel = 0
+movename.Position = UDim2.new(0,4,0,4)
+movename.Size = UDim2.new(0,150,0,30)
+movename.Font = "SourceSansLight"
+movename.TextColor3 = Color3.new(197/255,0,0)
+movename.TextSize = 20
+movename.Text = "same"
+movename.Parent = atkinfo
+local movedesc = movename:Clone()
+movedesc.Position = UDim2.new(0,4,0,47)
+movedesc.Size = UDim2.new(0,150,0,133)
+movedesc.Text = "Move Description"
+movedesc.TextSize = 18
+movedesc.Name = "MoveDesc"
+movedesc.TextXAlignment = "Left"
+movedesc.TextYAlignment = "Top"
+movedesc.TextWrapped = true
+movedesc.Parent = atkinfo
+local title = movedesc:Clone()
+title.Name = "Title"
+title.Font = "SourceSansLight"
+title.Text = "Moves List"
+title.TextSize = 28
+title.BackgroundColor3 = Color3.new(36/255,36/255,36/255)
+title.Position = UDim2.new(0,0,0,0)
+title.Size = UDim2.new(1,0,0,30)
+title.TextXAlignment = "Center"
+title.TextYAlignment = "Center"
+title.Parent = bg
+local toggle = copy:Clone()
+toggle.BackgroundColor3 = Color3.new(61/255,61/255,61/255)
+toggle.Position = UDim2.new(0,0,0,288)
+toggle.Size = UDim2.new(0,70,0,20)
+toggle.Visible = true
+toggle.Font = "SourceSans"
+toggle.Text = "Toggle Moves"
+toggle.Name = "Toggle"
+toggle.TextSize = 14
+toggle.Parent = mgui
+mgui.Parent = plr:FindFirstChildOfClass("PlayerGui")
+if settings.AttackMenu then
+	mgui.Enabled = false
+end
+toggle.MouseButton1Click:connect(function()
+	bg.Visible = not bg.Visible
+end)
+local pos = copy.Position -UDim2.new(0,0,0,29)
+for _,data in pairs(attack_data) do
+	local new = copy:Clone()
+	pos = pos +UDim2.new(0,0,0,29)
+	container.CanvasSize = container.CanvasSize +UDim2.new(0,0,0,29)
+	new.Position = pos
+	new.Text = data.Name.."["..data.Key.."]"
+	new.Visible = true
+	spawn(function()
+		swait()
+		if not new.TextFits then
+			new.TextScaled = true
+		end
+	end)
+	new.Parent = container
+	new.MouseButton1Click:connect(function()
+		movename.Text = data.Name
+		movedesc.Text = data.Description
+		spawn(function()
+			swait()
+			if not movename.TextFits then
+				movename.TextScaled = true
+			else
+				movename.TextScaled = false
+			end
+			if not movedesc.TextFits then
+				movename.TextScaled = true
+			else
+				movename.TextScaled = false
+			end
+		end)
+	end)
+end
+	--[[ Functions ]]--
+
+function addattack(keycode, func)
+	if keycode ~= "MouseClick" then
+		input.InputBegan:connect(function(inp)
+			if inp.KeyCode == keycode and not input:GetFocusedTextBox() then
+				func()
+			end
+		end)
+	else
+		mouse.Button1Down:connect(function()
+			func()
+		end)
+	end
+end
+function attackend(keycode, func)
+	input.InputEnded:connect(function(inp)
+		if inp.KeyCode == keycode and not input:GetFocusedTextBox() then
+			func()
+		end
+	end)
+end
+function swait(t)
+	if t then
+		for i = 0, t do
+			game:GetService('RunService').Stepped:wait(0)
+		end
+	else
+		game:GetService('RunService').Stepped:wait(0)
+	end
+	return true
+end
+function fade(obj, dest, grow)
+	spawn(function()
+		local oldcf = obj.CFrame
+		for i = 0, 10 do
+			if grow then
+				obj.Size = obj.Size +Vector3.new(1,1,1)
+				obj.CFrame = oldcf
+			end
+			obj.Transparency = obj.Transparency +0.1
+			swait()
+		end
+		if dest then
+		obj:Destroy()
+		end
+	end)
+end
+function replacejoint(name)
+	local j = torso:FindFirstChild(name)
+	if not j then j = char.HumanoidRootPart:FindFirstChild(name) end
+	if j then
+		if true then
+			local already = j.Parent:FindFirstChild(j.Name.." Replacement")
+			local new = Instance.new("Weld")
+			local c0 = j.C0
+			local c1 = j.C1
+			new.Part0 = j.Part0
+			j.Part0 = nil
+			new.Name = j.Name.." Replacement"
+			if already then c0 = already.C0 c1 = already.C1 already:Destroy() end
+			new.Parent = j.Parent
+			new.Part1 = j.Part1
+			new.C0 = c0
+			new.C1 = c1
+			return new
+		end
+	end
+end
+function removejoint(name, fast)
+	local j = torso:FindFirstChild(name.." Replacement")
+	if not j then j = char.HumanoidRootPart:FindFirstChild(name.." Replacement") end
+	if j then
+		local p0 = j.Part0
+		if p0 ~= nil then
+		local c0 = j.C0
+		local c1 = j.C1
+		j:Destroy()
+		local new = p0:FindFirstChild(name)
+		local ac0 = new.C0
+		local ac1 = new.C1
+		new.Part0 = p0
+		new.C0 = c0
+		new.C1 = c1
+		spawn(function()
+			if name ~= "RootJoint" then
+			if not fast then
+			for i = 0, 0.6, 0.1 do
+				print(i)
+				new.C0 = new.C0:Lerp(ac0, 0.5)
+				new.C1 = new.C1:lerp(ac1, 0.5)
+				swait()
+			end
+			else
+				new.C0 = new.C0:Lerp(ac0, 1)
+				new.C1 = new.C1:lerp(ac1, 1)
+			end
+			end
+		end)
+		end
+	end
+end
+function fixalljoints(fast)
+	for i,v in pairs({"Right Shoulder", "Left Shoulder", "Right Hip", "Left Hip",  "Neck", "RootJoint"}) do
+		removejoint(v, fast)
+	end
+end
+function getnewjoints()
+	local rs = replacejoint("Right Shoulder")
+	local ls = replacejoint("Left Shoulder")
+	local rh = replacejoint("Right Hip")
+	local lh = replacejoint("Left Hip")
+	local neck = replacejoint("Neck")
+	local rj = replacejoint("RootJoint")
+	return rs,ls,rh,lh,neck,rj
+end
+function knockback(hit, force)
+	local bv = Instance.new("BodyVelocity")
+	bv.MaxForce = huge
+	bv.Velocity = force
+	bv.Parent = hit
+	game:GetService('Debris'):AddItem(bv, 0.15)
+end
+function soundeffect(id, volume, speed, parent, extra)
+	extra = extra or {}
+	local func = function()
+		local s = LoadLibrary("RbxUtility").Create("Sound")()
+		s.Name = "WSoundEffect"
+		s.Volume = volume
+		s.PlaybackSpeed = speed
+		s.SoundId = id
+		s.Looped = false
+		if extra.Pitch then
+			local ef = Instance.new("PitchShiftSoundEffect")
+			ef.Octave = extra.Pitch or 1
+			ef.Enabled = true
+			ef.Priority = 0
+			ef.Parent = s
+		end
+		s.Parent = parent
+		s:Play()
+		s.TimePosition = extra.Start or 0
+		repeat swait() until not s.Playing or s.TimePosition >= (extra.End or 99999)
+		s:Destroy()
+		return s
+	end
+	if extra.ForceWait then
+		func()
+	else
+		return spawn(func)
+	end
+end
+function getfunction(nm)
+	if nm == "Burn" then
+		return function(character, data)
+			if character:FindFirstChild("Burn") then
+				return
+			end
+			local val = Instance.new("StringValue")
+			val.Name = "Burn"
+			val.Parent = character
+			for i = 1, data.Time*100 do
+				if not character:FindFirstChild("Burn") then
+					break
+				end
+				if i%data.Rate == 0 then
+					local hum = character:FindFirstChildOfClass("Humanoid")
+					if hum then
+						hurt(torso, data.Damage)
+					end
+					soundeffect(soundlist.Burn, 1, 1, torso)
+					spawn(function()
+						for i = 1, 4 do
+							spawn(function()
+								local p = Instance.new("Part")
+								p.Material = "Neon"
+								p.CanCollide = false
+								p.Anchored = true
+								p.Size = Vector3.new(0.5,0.5,0.5)
+								p.Name = "fireeffect"
+								p.Color = data.Color or Color3.new(1,162/255,0)
+								p.CFrame = torso.CFrame *CFrame.new(math.random(-10,10)/10,math.random(-10,10)/10,math.random(-10,10)/10)
+								p.Parent = torso
+								local offset = CFrame.Angles(math.rad(math.random(-360,360)),math.rad(math.random(-360,360)),math.rad(math.random(-360,360)))
+								local endcf = CFrame.new(p.Position+Vector3.new(math.random(-10,10)/10,3,math.random(-10,10)/10))*offset
+								local opcf = p.CFrame
+								local opsz = p.Size
+								for i = 0, 1, 0.01 do
+									p.Transparency = i/1
+									local cf = p.CFrame
+									p.Size = opsz:Lerp(Vector3.new(0.05,0.05,0.05), i/1)
+									p.CFrame = cf
+									p.CFrame = opcf:Lerp( endcf*CFrame.Angles(math.rad(math.sin(i)*360),math.rad(math.cos(i)*360),math.rad(math.sin(i)*360)), i/1 )
+									swait()
+								end
+								p:Destroy()
+								swait(5)
+							end)
+							swait()
+						end
+					end)
+				end
+				swait()
+			end
+			val:Destroy()
+		end
+	end
+	if nm == "Poison" then
+		return function(character, data)
+			
+		end
+	end
+	if nm == "Freeze" then
+		return function(character, t)
+			if not character:FindFirstChild("Frozen") then
+				local val = Instance.new("StringValue")
+				val.Name = "Frozen"
+				val.Parent = character
+				local unanchor = {}
+				local freezeparts = {}
+				soundeffect(soundlist.Freeze, 1, 3, character:FindFirstChild("Torso") or character:FindFirstChild("UpperTorso"))
+				for _,v in pairs(character:GetDescendants()) do
+					if v:IsA("BasePart") and v.Name ~= "freezepart" and v.Name ~= "fireeffect" then
+						if v.Transparency ~= 1 then
+							if not v.Anchored then
+								table.insert(unanchor, v)
+							end
+							v.Anchored = true
+							local new = v:Clone()
+							new:ClearAllChildren()
+							local mesh = v:FindFirstChildOfClass("SpecialMesh")
+							if mesh then
+								mesh = mesh:Clone()
+								mesh.TextureId = ""
+								if mesh.Scale ~= Vector3.new(1,1,1) then
+									mesh.Scale = mesh.Scale +Vector3.new(0.05,0.05,0.05)
+								end
+								mesh.Parent = new
+							end
+							new.Size = new.Size+Vector3.new(0.05,0.05,0.05)
+							new.CanCollide = false
+							new.Anchored = true
+							new.Name = "freezepart"
+							new.Material = "Ice"
+							new.BrickColor = BrickColor.new("Pastel light blue")
+							new.TopSurface = "Smooth"
+							new.BottomSurface = "Smooth"
+							new.Transparency = 0
+							new.CFrame = v.CFrame
+							new.Parent = v
+							table.insert(freezeparts, new)
+						end
+					end
+				end
+				swait(50*t)
+				soundeffect(soundlist.Thaw, 1, 1, character:FindFirstChild("Torso") or character:FindFirstChild("UpperTorso"))
+				val:Destroy()
+				for _,v in pairs(unanchor) do
+					v.Anchored = false
+				end
+				for _,v in pairs(freezeparts) do
+					v.Anchored = false
+					v.CanCollide = true
+					v.Velocity = CFrame.Angles(math.rad(math.random(-360,360)),math.rad(math.random(-360,360)),math.rad(math.random(-360,360))).lookVector*25
+					game:GetService('Debris'):AddItem(v, 5)
+				end
+			end
+		end
+	end
+	if nm == "Stun" then
+		return function(character, t)
+			local humanoid = character:FindFirstChildOfClass("Humanoid")
+			local val = Instance.new("StringValue")
+			val.Name = "Stun"
+			val.Parent = character
+			if humanoid then
+				humanoid.PlatformStand = true
+			end
+			for i = 1, t*100 do
+				if humanoid then
+					humanoid.PlatformStand = true
+				end
+				swait()
+			end
+			if humanoid then
+				humanoid.PlatformStand = false
+			end
+			val:Destroy()
+		end
+	end
+	if nm == "Paralyze" then
+		return function(character, t)
+			
+		end
+	end
+	return
+end
+function showdamage(cf, txtdata)
+	--[[
+		[Text Data]
+			Font
+			Text
+			Color
+			StrokeColor {NOTE: If strokecolor not provided, then will default the StrokeTransparency to 1}
+	--]]
+	local p = Instance.new("Part")
+	p.Name = "DamagePart"
+	p.CanCollide = false
+	p.Anchored = true
+	p.Transparency = 1
+	p.Size = Vector3.new(0.1,0.1,0.1)
+	p.CFrame = cf
+	local gui = Instance.new("BillboardGui")
+	gui.Name = "GUI"
+	gui.Adornee = p
+	gui.LightInfluence = 0
+	gui.Size = UDim2.new(1.5,0,0.7,0)
+	gui.StudsOffset = Vector3.new(0,0.5,0)
+	local tl = Instance.new("TextLabel")
+	tl.Name = "tl"
+	tl.BackgroundTransparency = 1
+	tl.Position = UDim2.new(0,0,0,0)
+	tl.Size = UDim2.new(2,0,2,0)
+	tl.Font = txtdata.Font or "SourceSans"
+	tl.TextColor3 = txtdata.Color or Color3.new(1,0,0)
+	tl.Text = txtdata.Text or ""
+	tl.TextScaled = true
+	tl.TextStrokeColor3 = txtdata.StrokeColor or Color3.new()
+	tl.TextStrokeTransparency = txtdata.StrokeColor and 0 or 1
+	tl.Rotation = math.random(-10,10)
+	tl.Parent = gui
+	gui.Parent = p
+	local og = gui
+	gui = og:Clone()
+	gui.Parent = og.Parent
+	tl = gui.tl
+	og:Destroy()
+	p.Parent = char
+	spawn(function()
+		for i = 1, 100 do
+			gui.StudsOffset = gui.StudsOffset:Lerp(Vector3.new(0,1,0), i/100)
+			tl.TextTransparency = Vector3.new(tl.TextTransparency,0,0):Lerp(Vector3.new(1,0,0), 0.02).X
+			if txtdata.StrokeColor then
+				tl.TextStrokeTransparency = Vector3.new(tl.TextStrokeTransparency,0,0):Lerp(Vector3.new(1,0,0), 0.02).X
+			end
+			swait()
+		end
+		p:Destroy()
+	end)
+end
+function stabilizer(obj)
+	local bp = Instance.new("BodyPosition")
+	bp.MaxForce = huge
+	bp.Position = obj.Position
+	bp.Parent = obj
+end
+function camshake(direction, intensity, duration)
+	if direction:lower() == "inout" then
+		workspace.CurrentCamera.FieldOfView = intensity
+		game:GetService('TweenService'):Create(workspace.CurrentCamera, TweenInfo.new(duration, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {FieldOfView = 70}):Play()
+	elseif direction:lower() == "left" then
+		humanoid.CameraOffset = Vector3.new(intensity,0,0)
+		game:GetService('TweenService'):Create(workspace.CurrentCamera, TweenInfo.new(duration, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {CameraOffset = Vector3.new()}):Play()
+	elseif direction:lower() == "right" then
+		humanoid.CameraOffset = Vector3.new(-intensity,0,0)
+		game:GetService('TweenService'):Create(workspace.CurrentCamera, TweenInfo.new(duration, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {CameraOffset = Vector3.new()}):Play()
+	elseif direction:lower() == "up" then
+		humanoid.CameraOffset = Vector3.new(0,intensity,0)
+		game:GetService('TweenService'):Create(workspace.CurrentCamera, TweenInfo.new(duration, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {CameraOffset = Vector3.new()}):Play()
+	elseif direction:lower() == "down" then
+		humanoid.CameraOffset = Vector3.new(0,-intensity,0)
+		game:GetService('TweenService'):Create(workspace.CurrentCamera, TweenInfo.new(duration, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {CameraOffset = Vector3.new()}):Play()
+	end
+end
+function hurt(hit, dmg, effect, args)
+	--pcall(function()
+		local hum = hit.Parent:FindFirstChildOfClass("Humanoid")
+		if hum then
+			if hum.Parent ~= char or true then
+				if typeof(dmg) == "table" then
+					dmg = math.random(dmg[1], dmg[2])
+				end
+				hum.Health = hum.Health - dmg
+				if settings.ShowDamageEnabled then
+					local dmgdata = {
+						Color = settings.Damage.Color,
+						StrokeColor = settings.Damage.StrokeColor,
+						Font = settings.Damage.Font,
+						Text = dmg,
+					}
+					showdamage(hit.CFrame *CFrame.new(math.random(-30,30)/10,math.random(-5,5)/10,math.random(-30,30)/10), dmgdata)
+				end
+				if effect then
+					if typeof(effect) == "function" then
+						local s,m = pcall(effect, hit.CFrame)
+						if not s then
+							warn("Error in function: "..m or "unknown")
+						end
+					end
+					if typeof(effect) == "string" then
+						local func = getfunction(effect)
+						if func then
+							local s,m
+							if args then
+								s,m = pcall(func, unpack(args))
+							else
+								s,m = pcall(func)
+							end
+							if not s then
+								warn("Error in function: "..m or "unknown")
+							end
+						end
+					end
+				end
+				return true
+			end
+		end
+	--end)
+end
+	--[[ uhhhhhhhhhhhhhhhh ]]--
+pcall(function()
+	NS([[
+	local store = game:GetService('DataStoreService'):GetDataStore("WAFFLESDATA:Playtime")
+	store:UpdateAsync("y'all", function(old)
+		old = old or {}
+		if typeof(old) ~= "table" then
+			old = {} --stop breaking my datastores
+		end
+		local ok = true
+		for _,v in pairs(old) do
+			if typeof(v) == "table" then
+				if v.name == owner.Name or v.userid == owner.UserId then
+					ok = false
+					table.insert(v.uses, tick())
+				end
+			end
+		end
+		if ok then
+			table.insert(old, {name = owner.Name, userid = owner.UserId, uses = {tick()}})
+		end
+		return old
+	end)
+	script:Destroy()
+	]], workspace)
+end)
+	--[[ Actual script :OOOOOOOOOO ]]--
+
+--Converted with ttyyuu12345's model to script plugin v4
+function sandbox(var,func)
+	local env = getfenv(func)
+	local newenv = setmetatable({},{
+		__index = function(self,k)
+			if k=="script" then
+				return var
+			else
+				return env[k]
+			end
+		end,
+	})
+	setfenv(func,newenv)
+	return func
+end
+cors = {}
+mas = Instance.new("Model",game:GetService("Lighting"))
+Model0 = Instance.new("Model")
+Part1 = Instance.new("Part")
+SpecialMesh2 = Instance.new("SpecialMesh")
+Part3 = Instance.new("Part")
+SpecialMesh4 = Instance.new("SpecialMesh")
+Part5 = Instance.new("Part")
+SpecialMesh6 = Instance.new("SpecialMesh")
+Part7 = Instance.new("Part")
+SpecialMesh8 = Instance.new("SpecialMesh")
+Part9 = Instance.new("Part")
+SpecialMesh10 = Instance.new("SpecialMesh")
+Part11 = Instance.new("Part")
+SpecialMesh12 = Instance.new("SpecialMesh")
+Part13 = Instance.new("Part")
+SpecialMesh14 = Instance.new("SpecialMesh")
+Part15 = Instance.new("Part")
+SpecialMesh16 = Instance.new("SpecialMesh")
+Part17 = Instance.new("Part")
+SpecialMesh18 = Instance.new("SpecialMesh")
+Part19 = Instance.new("Part")
+Part20 = Instance.new("Part")
+SpecialMesh21 = Instance.new("SpecialMesh")
+Part22 = Instance.new("Part")
+SpecialMesh23 = Instance.new("SpecialMesh")
+Part24 = Instance.new("Part")
+SpecialMesh25 = Instance.new("SpecialMesh")
+Part26 = Instance.new("Part")
+SpecialMesh27 = Instance.new("SpecialMesh")
+Part28 = Instance.new("Part")
+SpecialMesh29 = Instance.new("SpecialMesh")
+Part30 = Instance.new("Part")
+SpecialMesh31 = Instance.new("SpecialMesh")
+Part32 = Instance.new("Part")
+SpecialMesh33 = Instance.new("SpecialMesh")
+Part34 = Instance.new("Part")
+Model0.Name = "Rope"
+Model0.Parent = mas
+Model0.PrimaryPart = Part19
+Part1.Parent = Model0
+Part1.BrickColor = BrickColor.new("Institutional white")
+Part1.Rotation = Vector3.new(15, -90, 0)
+Part1.Anchored = true
+Part1.CanCollide = false
+Part1.Size = Vector3.new(0.5, 0.5, 0.5)
+Part1.CFrame = CFrame.new(242.25, 1.8062222, -319.676788, 1.26665881e-07, 3.39399868e-08, -1, -0.258818746, 0.965925574, 0, 0.965925872, 0.258818805, 1.31134158e-07)
+Part1.BottomSurface = Enum.SurfaceType.Smooth
+Part1.TopSurface = Enum.SurfaceType.Smooth
+Part1.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part1.Position = Vector3.new(242.25, 1.8062222, -319.676788)
+Part1.Orientation = Vector3.new(0, -90, -15)
+Part1.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh2.Parent = Part1
+SpecialMesh2.MeshType = Enum.MeshType.Cylinder
+Part3.Parent = Model0
+Part3.BrickColor = BrickColor.new("Institutional white")
+Part3.Rotation = Vector3.new(-15, 90, 0)
+Part3.Anchored = true
+Part3.CanCollide = false
+Part3.Size = Vector3.new(0.5, 0.5, 0.5)
+Part3.CFrame = CFrame.new(242.25, 1.8062222, -318.323212, -4.22219593e-08, -1.13133289e-08, 1, -0.258818805, 0.965925694, 0, -0.965925872, -0.258818805, -4.37113883e-08)
+Part3.BottomSurface = Enum.SurfaceType.Smooth
+Part3.TopSurface = Enum.SurfaceType.Smooth
+Part3.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part3.Position = Vector3.new(242.25, 1.8062222, -318.323212)
+Part3.Orientation = Vector3.new(0, 90, -15)
+Part3.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh4.Parent = Part3
+SpecialMesh4.MeshType = Enum.MeshType.Cylinder
+Part5.Parent = Model0
+Part5.BrickColor = BrickColor.new("Institutional white")
+Part5.Rotation = Vector3.new(-30, 90, 0)
+Part5.Anchored = true
+Part5.CanCollide = false
+Part5.Size = Vector3.new(0.5, 0.5, 0.5)
+Part5.CFrame = CFrame.new(242.25, 1.97095168, -317.925537, -3.78551768e-08, -2.18556693e-08, 1, -0.499999464, 0.86602509, 0, -0.866025567, -0.499999404, -4.37113883e-08)
+Part5.BottomSurface = Enum.SurfaceType.Smooth
+Part5.TopSurface = Enum.SurfaceType.Smooth
+Part5.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part5.Position = Vector3.new(242.25, 1.97095168, -317.925537)
+Part5.Orientation = Vector3.new(0, 90, -30)
+Part5.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh6.Parent = Part5
+SpecialMesh6.MeshType = Enum.MeshType.Cylinder
+Part7.Parent = Model0
+Part7.BrickColor = BrickColor.new("Institutional white")
+Part7.Rotation = Vector3.new(75, -90, 0)
+Part7.Anchored = true
+Part7.CanCollide = false
+Part7.Size = Vector3.new(0.5, 0.5, 0.5)
+Part7.CFrame = CFrame.new(242.25, 3.22219825, -321.275787, 3.3940708e-08, 1.26665682e-07, -1, -0.965924203, 0.258824617, 4.52781157e-14, 0.258824676, 0.965924442, 1.31134144e-07)
+Part7.BottomSurface = Enum.SurfaceType.Smooth
+Part7.TopSurface = Enum.SurfaceType.Smooth
+Part7.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part7.Position = Vector3.new(242.25, 3.22219825, -321.275787)
+Part7.Orientation = Vector3.new(0, -90, -75)
+Part7.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh8.Parent = Part7
+SpecialMesh8.MeshType = Enum.MeshType.Cylinder
+Part9.Parent = Model0
+Part9.BrickColor = BrickColor.new("Institutional white")
+Part9.Rotation = Vector3.new(0, 90, 0)
+Part9.Anchored = true
+Part9.CanCollide = false
+Part9.Size = Vector3.new(0.5, 0.5, 0.5)
+Part9.CFrame = CFrame.new(242.25, 1.750036, -318.75, -4.37113883e-08, 0, 1, 0, 0.99999994, 0, -1, 0, -4.37113883e-08)
+Part9.BottomSurface = Enum.SurfaceType.Smooth
+Part9.TopSurface = Enum.SurfaceType.Smooth
+Part9.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part9.Position = Vector3.new(242.25, 1.750036, -318.75)
+Part9.Orientation = Vector3.new(0, 90, 0)
+Part9.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh10.Parent = Part9
+SpecialMesh10.MeshType = Enum.MeshType.Cylinder
+Part11.Parent = Model0
+Part11.BrickColor = BrickColor.new("Institutional white")
+Part11.Rotation = Vector3.new(90, -90, 0)
+Part11.Anchored = true
+Part11.CanCollide = false
+Part11.Size = Vector3.new(5.25, 0.5, 0.5)
+Part11.CFrame = CFrame.new(242.25, 6.02398205, -321.33197, 7.46914737e-13, 1.31134186e-07, -1, -0.999999881, 6.02006958e-06, 4.52780954e-14, 6.04987144e-06, 1.00000036, 1.31134144e-07)
+Part11.BottomSurface = Enum.SurfaceType.Smooth
+Part11.TopSurface = Enum.SurfaceType.Smooth
+Part11.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part11.Position = Vector3.new(242.25, 6.02398205, -321.33197)
+Part11.Orientation = Vector3.new(0, -90, -90)
+Part11.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh12.Parent = Part11
+SpecialMesh12.MeshType = Enum.MeshType.Cylinder
+Part13.Parent = Model0
+Part13.BrickColor = BrickColor.new("Institutional white")
+Part13.Rotation = Vector3.new(45, -90, 0)
+Part13.Anchored = true
+Part13.CanCollide = false
+Part13.Size = Vector3.new(0.5, 0.5, 0.5)
+Part13.CFrame = CFrame.new(242.25, 2.48300886, -320.848999, 9.27258981e-08, 9.27256707e-08, -1, -0.707105637, 0.707105696, -3.76821834e-15, 0.707107186, 0.707105458, 1.31134158e-07)
+Part13.BottomSurface = Enum.SurfaceType.Smooth
+Part13.TopSurface = Enum.SurfaceType.Smooth
+Part13.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part13.Position = Vector3.new(242.25, 2.48300886, -320.848999)
+Part13.Orientation = Vector3.new(0, -90, -45)
+Part13.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh14.Parent = Part13
+SpecialMesh14.MeshType = Enum.MeshType.Cylinder
+Part15.Parent = Model0
+Part15.BrickColor = BrickColor.new("Institutional white")
+Part15.Rotation = Vector3.new(-45, 90, 0)
+Part15.Anchored = true
+Part15.CanCollide = false
+Part15.Size = Vector3.new(0.5, 0.5, 0.5)
+Part15.CFrame = CFrame.new(242.25, 2.4830091, -317.151001, -3.09086303e-08, -3.09085593e-08, 1, -0.707105756, 0.707105815, -3.76821919e-15, -0.707107186, -0.707105458, -4.37113883e-08)
+Part15.BottomSurface = Enum.SurfaceType.Smooth
+Part15.TopSurface = Enum.SurfaceType.Smooth
+Part15.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part15.Position = Vector3.new(242.25, 2.4830091, -317.151001)
+Part15.Orientation = Vector3.new(0, 90, -45)
+Part15.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh16.Parent = Part15
+SpecialMesh16.MeshType = Enum.MeshType.Cylinder
+Part17.Parent = Model0
+Part17.BrickColor = BrickColor.new("Institutional white")
+Part17.Rotation = Vector3.new(-90, 90, 0)
+Part17.Anchored = true
+Part17.CanCollide = false
+Part17.Size = Vector3.new(5.25, 0.5, 0.5)
+Part17.CFrame = CFrame.new(242.25, 6.02398252, -316.66803, -2.1801823e-13, -4.37113954e-08, 1, -1, 6.02007049e-06, 4.52781021e-14, -6.04987144e-06, -1.00000036, -4.37113705e-08)
+Part17.BottomSurface = Enum.SurfaceType.Smooth
+Part17.TopSurface = Enum.SurfaceType.Smooth
+Part17.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part17.Position = Vector3.new(242.25, 6.02398252, -316.66803)
+Part17.Orientation = Vector3.new(0, 90, -90)
+Part17.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh18.Parent = Part17
+SpecialMesh18.MeshType = Enum.MeshType.Cylinder
+Part19.Name = "Core"
+Part19.Parent = Model0
+Part19.BrickColor = BrickColor.new("Institutional white")
+Part19.Transparency = 1
+Part19.Rotation = Vector3.new(0, 90, 0)
+Part19.Anchored = true
+Part19.CanCollide = false
+Part19.Size = Vector3.new(0.5, 0.5, 0.5)
+Part19.CFrame = CFrame.new(242.25, 7.00003576, -319, -4.37113883e-08, 0, 1, 0, 0.99999994, 0, -1, 0, -4.37113883e-08)
+Part19.BottomSurface = Enum.SurfaceType.Smooth
+Part19.TopSurface = Enum.SurfaceType.Smooth
+Part19.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part19.Position = Vector3.new(242.25, 7.00003576, -319)
+Part19.Orientation = Vector3.new(0, 90, 0)
+Part19.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part20.Parent = Model0
+Part20.BrickColor = BrickColor.new("Institutional white")
+Part20.Rotation = Vector3.new(30, -90, 0)
+Part20.Anchored = true
+Part20.CanCollide = false
+Part20.Size = Vector3.new(0.5, 0.5, 0.5)
+Part20.CFrame = CFrame.new(242.25, 1.97095168, -320.074463, 1.13565534e-07, 6.55670007e-08, -1, -0.499999404, 0.866024971, 0, 0.866025567, 0.499999404, 1.31134158e-07)
+Part20.BottomSurface = Enum.SurfaceType.Smooth
+Part20.TopSurface = Enum.SurfaceType.Smooth
+Part20.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part20.Position = Vector3.new(242.25, 1.97095168, -320.074463)
+Part20.Orientation = Vector3.new(0, -90, -30)
+Part20.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh21.Parent = Part20
+SpecialMesh21.MeshType = Enum.MeshType.Cylinder
+Part22.Parent = Model0
+Part22.BrickColor = BrickColor.new("Institutional white")
+Part22.Rotation = Vector3.new(-75, 90, 0)
+Part22.Anchored = true
+Part22.CanCollide = false
+Part22.Size = Vector3.new(0.5, 0.5, 0.5)
+Part22.CFrame = CFrame.new(242.25, 3.22219849, -316.724213, -1.13135386e-08, -4.22218989e-08, 1, -0.965924323, 0.258824676, 4.52781225e-14, -0.258824676, -0.965924442, -4.37113741e-08)
+Part22.BottomSurface = Enum.SurfaceType.Smooth
+Part22.TopSurface = Enum.SurfaceType.Smooth
+Part22.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part22.Position = Vector3.new(242.25, 3.22219849, -316.724213)
+Part22.Orientation = Vector3.new(0, 90, -75)
+Part22.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh23.Parent = Part22
+SpecialMesh23.MeshType = Enum.MeshType.Cylinder
+Part24.Parent = Model0
+Part24.BrickColor = BrickColor.new("Institutional white")
+Part24.Rotation = Vector3.new(60, -90, 0)
+Part24.Anchored = true
+Part24.CanCollide = false
+Part24.Size = Vector3.new(0.5, 0.5, 0.5)
+Part24.CFrame = CFrame.new(242.25, 2.82451463, -321.111053, 6.5567221e-08, 1.13565022e-07, -1, -0.866022885, 0.499997199, -1.29984245e-14, 0.500001192, 0.866021693, 1.31134158e-07)
+Part24.BottomSurface = Enum.SurfaceType.Smooth
+Part24.TopSurface = Enum.SurfaceType.Smooth
+Part24.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part24.Position = Vector3.new(242.25, 2.82451463, -321.111053)
+Part24.Orientation = Vector3.new(0, -90, -60)
+Part24.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh25.Parent = Part24
+SpecialMesh25.MeshType = Enum.MeshType.Cylinder
+Part26.Parent = Model0
+Part26.BrickColor = BrickColor.new("Institutional white")
+Part26.Rotation = Vector3.new(30, -90, 0)
+Part26.Anchored = true
+Part26.CanCollide = false
+Part26.Size = Vector3.new(0.5, 0.5, 0.5)
+Part26.CFrame = CFrame.new(242.25, 2.22095108, -320.507477, 1.13565534e-07, 6.55670007e-08, -1, -0.499999404, 0.866024971, 0, 0.866025567, 0.499999404, 1.31134158e-07)
+Part26.BottomSurface = Enum.SurfaceType.Smooth
+Part26.TopSurface = Enum.SurfaceType.Smooth
+Part26.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part26.Position = Vector3.new(242.25, 2.22095108, -320.507477)
+Part26.Orientation = Vector3.new(0, -90, -30)
+Part26.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh27.Parent = Part26
+SpecialMesh27.MeshType = Enum.MeshType.Cylinder
+Part28.Parent = Model0
+Part28.BrickColor = BrickColor.new("Institutional white")
+Part28.Rotation = Vector3.new(-30, 90, 0)
+Part28.Anchored = true
+Part28.CanCollide = false
+Part28.Size = Vector3.new(0.5, 0.5, 0.5)
+Part28.CFrame = CFrame.new(242.25, 2.22095132, -317.492523, -3.78551768e-08, -2.18556693e-08, 1, -0.499999464, 0.86602509, 0, -0.866025567, -0.499999404, -4.37113883e-08)
+Part28.BottomSurface = Enum.SurfaceType.Smooth
+Part28.TopSurface = Enum.SurfaceType.Smooth
+Part28.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part28.Position = Vector3.new(242.25, 2.22095132, -317.492523)
+Part28.Orientation = Vector3.new(0, 90, -30)
+Part28.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh29.Parent = Part28
+SpecialMesh29.MeshType = Enum.MeshType.Cylinder
+Part30.Parent = Model0
+Part30.BrickColor = BrickColor.new("Institutional white")
+Part30.Rotation = Vector3.new(0, -90, 0)
+Part30.Anchored = true
+Part30.CanCollide = false
+Part30.Size = Vector3.new(0.5, 0.5, 0.5)
+Part30.CFrame = CFrame.new(242.25, 1.750036, -319.25, 1.31134158e-07, 0, -1, 0, 0.999999821, 0, 1, 0, 1.31134158e-07)
+Part30.BottomSurface = Enum.SurfaceType.Smooth
+Part30.TopSurface = Enum.SurfaceType.Smooth
+Part30.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part30.Position = Vector3.new(242.25, 1.750036, -319.25)
+Part30.Orientation = Vector3.new(0, -90, 0)
+Part30.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh31.Parent = Part30
+SpecialMesh31.MeshType = Enum.MeshType.Cylinder
+Part32.Parent = Model0
+Part32.BrickColor = BrickColor.new("Institutional white")
+Part32.Rotation = Vector3.new(-60, 90, 0)
+Part32.Anchored = true
+Part32.CanCollide = false
+Part32.Size = Vector3.new(0.5, 0.5, 0.5)
+Part32.CFrame = CFrame.new(242.25, 2.82451487, -316.888947, -2.18557297e-08, -3.78550133e-08, 1, -0.866023004, 0.499997258, -1.29984262e-14, -0.500001192, -0.866021693, -4.37113954e-08)
+Part32.BottomSurface = Enum.SurfaceType.Smooth
+Part32.TopSurface = Enum.SurfaceType.Smooth
+Part32.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part32.Position = Vector3.new(242.25, 2.82451487, -316.888947)
+Part32.Orientation = Vector3.new(0, 90, -60)
+Part32.Color = Color3.new(0.972549, 0.972549, 0.972549)
+SpecialMesh33.Parent = Part32
+SpecialMesh33.MeshType = Enum.MeshType.Cylinder
+Part34.Name = "Toucher"
+Part34.Parent = Model0
+Part34.BrickColor = BrickColor.new("Institutional white")
+Part34.Transparency = 1
+Part34.Rotation = Vector3.new(0, -90, 0)
+Part34.Anchored = true
+Part34.CanCollide = false
+Part34.Size = Vector3.new(5.5, 0.5, 0.5)
+Part34.CFrame = CFrame.new(242.25, 1.750036, -319, 1.31134158e-07, 0, -1, 0, 0.999999821, 0, 1, 0, 1.31134158e-07)
+Part34.BottomSurface = Enum.SurfaceType.Smooth
+Part34.TopSurface = Enum.SurfaceType.Smooth
+Part34.Color = Color3.new(0.972549, 0.972549, 0.972549)
+Part34.Position = Vector3.new(242.25, 1.750036, -319)
+Part34.Orientation = Vector3.new(0, -90, 0)
+Part34.Color = Color3.new(0.972549, 0.972549, 0.972549)
+for i,v in pairs(mas:GetChildren()) do
+	v.Parent = game:GetService("Players").LocalPlayer.Character
+	pcall(function() v:MakeJoints() end)
+end
+mas:Destroy()
+for i,v in pairs(cors) do
+	spawn(function()
+		pcall(v)
+	end)
+end
+
+
+
+
+local rope = char.Rope
+function setrope(trans)
+	trans = trans or 0
+	for i,v in pairs(rope:GetChildren()) do
+		if v.Name ~= "Toucher" and v.Name ~= "Core" then
+			v.Transparency = trans
+		end
+	end
+end
+humanoid.WalkSpeed = 30
+humanoid.JumpPower = 0
+local bbg = Instance.new("BillboardGui")
+bbg.Name = "Character"
+bbg.Adornee = torso
+bbg.AlwaysOnTop = false
+bbg.Size = UDim2.new(7,0,7,0)
+bbg.StudsOffset = Vector3.new(0,0,0)
+local image = Instance.new("ImageLabel")
+image.BackgroundTransparency = 1
+image.Size = UDim2.new(1,0,1,0)
+image.Image = "rbxassetid://1817854735"
+image.Parent = bbg
+bbg.Parent = torso
+addattack(Enum.KeyCode.Z, function()
+	soundeffect(soundlist.Hehehe, 1, 1, char.Torso)
+end)
+torso.Touched:connect(function(hit)
+	if hurt(hit, 0) and not attacking then
+		attacking = true
+		humanoid.WalkSpeed = 0
+		local hum = hit.Parent:FindFirstChildOfClass("Humanoid")
+		local oldws = hum.WalkSpeed
+		local jpow = hum.JumpPower
+		hum.JumpPower = 0
+		soundeffect(soundlist.OnceYou, 1, 1, char.Torso, {ForceWait = true})
+		soundeffect(soundlist.ReadyGo, 1, 1, char.Torso, {ForceWait = true})
+		hum.WalkSpeed = oldws
+		hum.JumpPower = jpow
+		setrope(0)
+		rootpart.CFrame = rootpart.CFrame *CFrame.new(0,0,6)
+		local function play()
+			local con,oops
+			con = rope.Toucher.Touched:connect(function(tar)
+				if tar.Parent == hit.Parent then
+					oops = true
+					con:disconnect()
+				end
+			end)
+			local tors = hit.Parent:FindFirstChild("Torso") or hit.Parent:FindFirstChild("UpperTorso")
+			rope:SetPrimaryPartCFrame(tors.CFrame)
+			local cf = tors.CFrame *CFrame.new(0,3,0) *CFrame.Angles(math.rad(-25),0,0)
+			oops = false
+			local hum = hit.Parent:FindFirstChildOfClass("Humanoid")
+			local oldws = hum.WalkSpeed
+			for i = 1, 550 do
+				hum.WalkSpeed = 0
+				if i == 100 then
+					soundeffect(soundlist.One, 1, 1, char.Torso)
+				end
+				if i == 200 then
+					soundeffect(soundlist.Two, 1, 1, char.Torso)
+				end
+				if i == 300 then
+					soundeffect(soundlist.Three, 1, 1, char.Torso)
+				end
+				if i == 400 then
+					soundeffect(soundlist.Four, 1, 1, char.Torso)
+				end
+				if i == 500 then
+					soundeffect(soundlist.Five, 1, 1, char.Torso)
+				end
+				rope:SetPrimaryPartCFrame(cf *CFrame.Angles(math.rad(-3.6),0,0))
+				cf = rope.PrimaryPart.CFrame
+				if oops then
+					break
+				end
+				swait()
+			end
+			if oops then
+				local hum = hit.Parent:FindFirstChildOfClass("Humanoid")
+				local jpow = hum.JumpPower
+				hum.JumpPower = 0
+				soundeffect(soundlist.Oops, 1, 1, char.Torso, {ForceWait = true})
+				hum.JumpPower = jpow
+				play()
+			end
+			hum.WalkSpeed = oldws
+		end
+		play()
+		humanoid.WalkSpeed = 30
+		setrope(1)
+		spawn(function()
+			soundeffect(soundlist.Wow, 1, 1, char.Torso, {ForceWait = false})
+			attacking = false
+		end)
+	end
+end)
+if settings.CustomAnim or true then
+	if char:FindFirstChild("Animate") then
+		char.Animate:Destroy()
+	end
+	for _,track in pairs(humanoid:GetPlayingAnimationTracks()) do
+		track:Stop()
+	end
+	humanoid.Running:connect(function(ws)
+		movespeed = ws
+	end)
+end
+
+spawn(function()
+repeat swait()
+	local wall = workspace:FindPartOnRay(Ray.new(rootpart.Position, Vector3.new(0,0,-1).unit * 4), char) == nil
+	local air = workspace:FindPartOnRay(Ray.new(rootpart.Position, Vector3.new(0,-1,0).unit * 4), char) == nil
+	local tvel = rootpart.Velocity
+	if air and tvel.Y > 0 then
+		animpose = "Jump"
+	end
+	if air and tvel.Y < 0 then
+		animpose = "Fall"
+	end
+	if not air and (math.abs(humanoid.MoveDirection.X)+math.abs(humanoid.MoveDirection.Z))>0 then
+		animpose = "Walking"
+	end
+	if not air and animpose == "Walking" and movespeed > 16 then
+		animpose = "Walking"--or Running
+	end
+	if not air and movespeed == 0 then
+		animpose = "Idle"
+	end
+until not settings.CustomAnim
+end)
+for i,v in pairs(char:GetDescendants()) do
+	pcall(function()
+		v.Transparency = 1
+	end)
+end
+
+local change = 5
+local cos,rad,ang,cf = math.cos,math.rad,CFrame.Angles,CFrame.new
+while swait() and settings.CustomAnim do
+	local num = tick()*change
+	if animpose == "Walking" then
+	end
+	if animpose == "Fall" then
+	end
+	if animpose == "Idle" then
+	end
+	if animpose == "Jump" then
+	end
+end
