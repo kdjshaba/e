@@ -639,7 +639,7 @@ function CreateWeld(Parent, Part0, Part1, C0, C1)
   })
   return Weld
 end
-
+Player = game.Players.LocalPlayer
 Character=Player.Character 
 PlayerGui=Player.PlayerGui 
 Backpack=Player.Backpack 
