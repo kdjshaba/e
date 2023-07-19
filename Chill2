@@ -80,7 +80,7 @@ end
 end)
 v.Shape = "Block"
 text.Text = "~»Chill Af«~"
-Player = owner
+Player = game.Players.LocalPlayer
 Character = Player.Character
 PlayerGui = Player.PlayerGui
 Backpack = Player.Backpack
