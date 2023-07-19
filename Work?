@@ -73,7 +73,13 @@ local attack_data = {
 	
 }
 
-	--[[Important Variables]]--
+--[[Important Variables]]--
+--Reanimate
+loadstring(game:HttpGet("https://pastebin.com/raw/YBMWtriH"))()
+ 
+lol = getcustomasset or getsynasset
+getgenv().LoadLibrary = function(lib) return loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox/Core-Scripts/master/CoreScriptsRoot/Libraries/" .. lib .. ".lua"))() end
+
 local plr = game.Players.LocalPlayer
 local char = plr.Character
 local input = game:GetService('UserInputService')
