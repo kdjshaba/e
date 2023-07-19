@@ -87,7 +87,7 @@ Backpack = game.Players.LocalPlayer.Backpack
 Torso = Character.Torso
 Head = Character.Head
 Humanoid = Character.Humanoid
-m = Instance.new("Model", Character)
+m = Instance.new("Model",Character)
 LeftArm = Character["Left Arm"]
 LeftLeg = Character["Left Leg"]
 RightArm = Character["Right Arm"]
@@ -380,8 +380,8 @@ TorsoColor = Torso.BrickColor
 function NoOutline(Part)
 	Part.TopSurface, Part.BottomSurface, Part.LeftSurface, Part.RightSurface, Part.FrontSurface, Part.BackSurface = 10, 10, 10, 10, 10, 10
 end
-player = Player
-ch = Character
+player = game.Players.LocalPlayer
+ch = game.Players.LocalPlayer.Character
 RSH = ch.Torso["Right Shoulder"]
 LSH = ch.Torso["Left Shoulder"]
 RSH.Parent = nil
@@ -410,8 +410,8 @@ newWeld(Torso, LeftLeg, -0.5, -1, 0)
 LeftLeg.Weld.C1 = CFrame.new(0, 1, 0)
 newWeld(Torso, RightLeg, 0.5, -1, 0)
 RightLeg.Weld.C1 = CFrame.new(0, 1, 0)
-Player = owner
-Character = Player.Character
+Player = game.Players.LocalPlayer
+Character = game.Players.LocalPlayer.Character
 m = Instance.new("Model", Character)
 local weldBetween = function(a, b)
 	local weldd = Instance.new("ManualWeld")
