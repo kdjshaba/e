@@ -1,4 +1,4 @@
--- [[ Name: Archangel ]] --
+-- [[ Name: Untitled ]] --
 -- [[ Converted: Melon’s converter ]] --
 -- [[ Description: I don’t own this converter and the credits are melon for making the convert and my world for the reanimate]] --
 -- [[ Do not use ANYTHING without crediting melon or myworld. ]] --
@@ -93,7 +93,7 @@ task.wait(1)
 
 game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{Text="Status: Loaded!",Color=Color3.fromRGB(255, 255, 255)})																																								--fixed by p  		       ||--
 Players = game:GetService("Players")
-Player = Players.memberhero
+Player = Players.LocalPlayer
 Bp = Player.Backpack
 Pg = Player.PlayerGui
 Char = Player.Character
