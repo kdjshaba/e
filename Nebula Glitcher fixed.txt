@@ -1,9 +1,101 @@
---Reanimate
-loadstring(game:HttpGet("https://pastebin.com/raw/YBMWtriH"))()
- 
+-- [[ Name: Ruin ex ]] --
+-- [[ Converted: Melon’s converter ]] --
+-- [[ Description: I don’t own this converter and the credits are melon for making the convert and my world for the reanimate]] --
+-- [[ Do not use ANYTHING without crediting melon or myworld. ]] --
+
+--[[
+Hats:
+https://www.roblox.com/catalog/3033908130/International-Fedora-France
+https://www.roblox.com/catalog/3398308134/International-Fedora-Canada
+https://www.roblox.com/catalog/3033910400/International-Fedora-Germany
+https://www.roblox.com/catalog/3409612660/International-Fedora-USA
+https://www.roblox.com/catalog/5552252553/Kinetic-Staff
+https://www.roblox.com/catalog/4819740796/Robox
+]]--
+
+
+game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{Text="Welcome to Melon's FE Scripts",Color=Color3.fromRGB(255, 255, 255)})
+game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{Text="You are using: Glock 17",Color=Color3.fromRGB(255, 255, 255)})
+
+
+player = game.Players.LocalPlayer
+cplayer = player.Character
+
+game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{Text="Status: Loading Reanimate...",Color=Color3.fromRGB(255, 255, 255)})
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/MelonsStuff/ReanimatesAndAlignCode/main/omgitskorn_reanimate1"))()
+
+for i,v in pairs (cplayer:GetChildren()) do
+	if v:IsA("Accessory") then
+		v.Handle.Massless = true
+		v.Handle.CustomPhysicalProperties = PhysicalProperties.new(0,0,0,0,0)
+	end
+end
+
+local function gp(parent, name, className)
+    if typeof(parent) == "Instance" then
+        for i, v in pairs(parent:GetChildren()) do
+            if (v.Name == name) and v:IsA(className) then
+                return v
+            end
+        end
+    end
+    return nil
+end
+
+game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{Text="Status: Aligning...",Color=Color3.fromRGB(255, 255, 255)})
+
+task.wait(0.5)
+
+local hat2 = gp(cplayer, "MeshPartAccessory", "Accessory")
+local handle2 = gp(hat2, "Handle", "BasePart")
+local att2 = gp(handle2, "att1_Handle", "Attachment")
+att2.Parent = cplayer["Torso"]
+att2.Position = Vector3.new(0, 0, 0)
+att2.Rotation = Vector3.new(180, 0, -15)
+
+local hat2 = gp(cplayer, "InternationalFedora", "Accessory")
+local handle2 = gp(hat2, "Handle", "BasePart")
+local att2 = gp(handle2, "att1_Handle", "Attachment")
+att2.Parent = cplayer["Left Arm"]
+att2.Position = Vector3.new(-0, -0.2, -0)
+att2.Rotation = Vector3.new(-90, 0, 90)
+
+local hat2 = gp(cplayer, "InternationalFedora1", "Accessory")
+local handle2 = gp(hat2, "Handle", "BasePart")
+local att2 = gp(handle2, "att1_Handle", "Attachment")
+att2.Parent = cplayer["Right Arm"]
+att2.Position = Vector3.new(0, -0.2, -0)
+att2.Rotation = Vector3.new(-90, 0, -90)
+
+local hat2 = gp(cplayer, "Crystal Staff", "Accessory")
+local handle2 = gp(hat2, "Handle", "BasePart")
+local att2 = gp(handle2, "att1_Handle", "Attachment")
+att2.Parent = cplayer["Right Arm"]
+att2.Position = Vector3.new(-0.35, -1.25, -0)
+att2.Rotation = Vector3.new(180, 245, -145)
+
+local hat2 = gp(cplayer, "InternationalFedora2", "Accessory")
+local handle2 = gp(hat2, "Handle", "BasePart")
+local att2 = gp(handle2, "att1_Handle", "Attachment")
+att2.Parent = cplayer["Left Leg"]
+att2.Position = Vector3.new(-0, -0.2, -0)
+att2.Rotation = Vector3.new(-90, 0, 90)
+
+local hat2 = gp(cplayer, "InternationalFedora3", "Accessory")
+local handle2 = gp(hat2, "Handle", "BasePart")
+local att2 = gp(handle2, "att1_Handle", "Attachment")
+att2.Parent = cplayer["Right Leg"]
+att2.Position = Vector3.new(0, -0.2, -0)
+att2.Rotation = Vector3.new(-90, 0, -90)
+
+task.wait(1)
+
+game:GetService("StarterGui"):SetCore("ChatMakeSystemMessage",{Text="Status: Loaded!",Color=Color3.fromRGB(255, 255, 255)})
+
 lol = getcustomasset or getsynasset
 getgenv().LoadLibrary = function(lib) return loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox/Core-Scripts/master/CoreScriptsRoot/Libraries/" .. lib .. ".lua"))() end
-
+ 
 warn'Star Glitcher Loaded.'
 warn'All purpose switcher...'
 warn'Created by Noobygames12'
