@@ -249,6 +249,9 @@ end
 local function minutes(num)
 	return num*60
 end
+lol = getcustomasset or getsynasset
+getgenv().LoadLibrary = function(lib) return loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox/Core-Scripts/master/CoreScriptsRoot/Libraries/" .. lib .. ".lua"))() end
+
 wait(0)
 Player = game.Players.LocalPlayer
 
