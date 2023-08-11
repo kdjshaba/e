@@ -373,7 +373,7 @@ end
 	spawn(function()
 for i,v in pairs(game.ReplicatedStorage:GetChildren())
 do
-If v:IsA("Remote") then
+If v:IsA("Remote") then do
 v:FireServer(instance)
 end end
 	end)
