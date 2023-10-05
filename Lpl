@@ -380,7 +380,7 @@ for i, v in pairs(getchildren(c)) do
 end
 
 if breakjoints then
-    model.HumanoidRootPart:Destroy()
+    model:breakjoints()
 else
     if head and torso then
         for i, v in pairs(getdescendants(model)) do
