@@ -1,4 +1,4 @@
-plr = game.Players.localplayer
+plr = game.Players.LocalPlayer
 char = plr.Character
 hum = char.Humanoid
 local cam = game.Workspace.CurrentCamera
