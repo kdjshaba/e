@@ -4,45 +4,50 @@ local FEService = loadstring(game:HttpGetAsync("https://raw.githubusercontent.co
 
 
 FEService:FullNetwork()  
+-- [[ Name: Commander CR by ??? ]] --
+-- [[ Converted: By Melon ]] --
+-- [[ Reanimate: By Emper ]] --
+-- [[ Description: nothing to put ]] --
 
-print(game.Players.LocalPlayer.SimulationRadius)
---[[
-Paid:
-https://www.roblox.com/catalog/14255556501/Extra-Right-White-Arm
-https://www.roblox.com/catalog/14255554762/Extra-Left-White-Arm
-https://www.roblox.com/catalog/14768693948/White-Extended-Right-Arm
-https://www.roblox.com/catalog/14768701869/White-Extended-Left-Arm 
-https://www.roblox.com/catalog/14255528083/Torso-Extension
-or
-https://www.roblox.com/catalog/13779879140/Black-Fluffy-Fur-Body
-(ANYTHING CAN BE USED FOR THE TORSO SUCH AS A VEST.)
+-- [[ Hats ]] --
 
-Paid (2):
-https://www.roblox.com/catalog/11159410305/Rectangle-Head-For-Headless
-https://www.roblox.com/catalog/11263254795/Dummy-Head-For-Headless
-https://www.roblox.com/catalog/12344545199/Extra-Left-hand-moving-Blocky-white
-https://www.roblox.com/catalog/12344591101/Extra-Right-hand-moving-Blocky-white
-https://www.roblox.com/catalog/14255528083/Torso-Extension
-or
-https://www.roblox.com/catalog/13779879140/Black-Fluffy-Fur-Body
-(ANYTHING CAN BE USED FOR THE TORSO SUCH AS A VEST.)
+-- [[ Free ]] --
+-- [[ www.roblox.com/catalog/4819740796/Robox ]] --
+-- [[ www.roblox.com/catalog/3409612660/International-Fedora-USA ]] --
+-- [[ www.roblox.com/catalog/3398308134/International-Fedora-Canada ]] --
+-- [[ www.roblox.com/catalog/3033908130/International-Fedora-France ]] --
+-- [[ www.roblox.com/catalog/3033910400/International-Fedora-Germany ]] --
 
-Free:
-https://www.roblox.com/catalog/3033908130/International-Fedora-France
-https://www.roblox.com/catalog/3033910400/International-Fedora-Germany
-https://www.roblox.com/catalog/3409612660/International-Fedora-USA
-https://www.roblox.com/catalog/3398308134/International-Fedora-Canada
-https://www.roblox.com/catalog/4819740796/Robox
+-- [[ Paid (1) ]] --
+-- [[ www.roblox.com/catalog/14255528083/Torso-Extension ]] --
+-- [[ www.roblox.com/catalog/14255556501/Extra-Right-White-Arm ]] --
+-- [[ www.roblox.com/catalog/14255554762/Extra-Left-White-Arm ]] --
+-- [[ www.roblox.com/catalog/14768693948/White-Extended-Right-Arm ]] --
+-- [[ www.roblox.com/catalog/14768701869/White-Extended-Left-Arm ]] --
 
-Weapons:
-https://www.roblox.com/catalog/13760686814/Classic-MARKA-17M-Valkan-Left
-]]--
+-- [[ Paid (2) ]] --
+-- [[ www.roblox.com/catalog/14255528083/Torso-Extension ]] --
+-- [[ www.roblox.com/catalog/11159410305/Rectangle-Head-For-Headless ]] --
+-- [[ www.roblox.com/catalog/11263254795/Dummy-Head-For-Headless ]] --
+-- [[ www.roblox.com/catalog/12344545199/Extra-Left-hand-moving-Blocky-white ]] --
+-- [[ www.roblox.com/catalog/12344591101/Extra-Right-hand-moving-Blocky-white ]] --
+
+-- [[ Guns ]] --
+
+-- [[ www.roblox.com/catalog/13760686814/Classic-MARKA-17M-Valkan-Left ]] --
+-- [[ www.roblox.com/catalog/4623059912/Starslayer-Railgun ]] --
+-- [[ www.roblox.com/catalog/14683431575/Law-Enforcement-Beanbag ]] --
+-- [[ www.roblox.com/catalog/5136154487/DG-40-Archangel-Sniper-Rifle-Black ]] --
+-- [[ www.roblox.com/catalog/12830271515/White-Cyber-Heavy-Revolver-Left ]] --
+-- [[ * FREE * www.roblox.com/catalog/10775031176/The-Pogo ]] --
+-- [[ * FREE * www.roblox.com/catalog/5552252553/Kinetic-Staff ]] --
+-- [[ The list above is the supported hats. ]] --
 
 game:GetService("StarterGui"):SetCore("SendNotification", { 
-	Title = "Melon's (FE) Scripts";
-	Text = "Have fun!";
-	Icon = "rbxthumb://type=Asset&id=13446503788&w=150&h=150"})
-Duration = 16;
+	Title = "Melon's (FE) Converts/Scripts";
+	Text = "Thanks for using!";
+	Icon = "rbxthumb://type=Asset&id=11561641603&w=150&h=150"})
+Duration = 3;
 
 if not game:IsLoaded() then
 	game.Loaded:Wait()
@@ -277,9 +282,22 @@ local AccessoryTable = {
 	{ Mesh = "3030546036", Texture = "3360978739", Instance = LeftArm, CFrame = CFrameAngles(-90, 0, 89.5) },
 	{ Mesh = "3030546036", Texture = "3409604993", Instance = RightLeg, CFrame = CFrameAngles(-90, 0, -89.5) },
 	{ Mesh = "3030546036", Texture = "3033898741", Instance = LeftLeg, CFrame = CFrameAngles(-90, 0, 89.5) },
-    
-    -- Temporary --
-    { Mesh = "14833036921", Texture = "14833036785", Instance = FakeRA, CFrame = CFramenew(0,-2.35, -0.80) * CFrameAngles(1.85, 0, 3.15) },
+   
+    -- DG 40 --
+    { Mesh = "5135810417", Texture = "5135790044", Instance = FakeRA, CFrame = CFrameAngles(-0.10, -1.55, 1.45) * CFramenew(-2.55,0.35,0.15)},
+    -- Cyber Heavy Revolver --
+    { Mesh = "12830091831", Texture = "9990288940", Instance = FakeRA, CFrame = CFrameAngles(0.55, 0, 0) * CFramenew(0,-1.15,0.15)},
+    -- Beanbag Shotgun --
+    { Mesh = "14682184097", Texture = "14682167931", Instance = FakeRA, CFrame = CFrameAngles(0.05, 0, 3.15) * CFramenew(0,1.35,-0.25)},
+    -- Starslayer Railgun --
+    { Mesh = "4615369575", Texture = "4615393635", Instance = FakeRA, CFrame = CFrameAngles(-0.80, 1.55, 0) * CFramenew(1.45,-1,0)},
+    -- MARKA-17M --
+    { Mesh = "13753961447", Texture = "13760652946", Instance = FakeRA, CFrame = CFramenew(0,-1.45,-0.65) * CFrameAngles(0, -1.50, 0.75) },
+    -- Pogo Stick --
+    { Mesh = "10775011914", Texture = "10774853167", Instance = FakeRA, CFrame = CFramenew(0,-2.55,-0.65) * CFrameAngles(0, -1.55, 0.65) },
+    -- Crystal Staff --
+    { Mesh = "5548423017", Texture = "5548423938", Instance = FakeRA, CFrame = CFramenew(0,-1.65,-0) * CFrameAngles(0, -1.55, 0.60) },
+
 }
 
 for _, Table in pairs(AccessoryTable) do
@@ -528,6 +546,12 @@ CharacterClone:GetPropertyChangedSignal("Parent"):Connect(function()
 end)
 
 BindableEvent:GetPropertyChangedSignal("Parent"):Connect(Event)
+ 
+game:GetService("StarterGui"):SetCore("SendNotification", { 
+	Title = "Melon's (FE) Converts/Scripts";
+	Text = "Loaded successfully!";
+	Icon = "rbxthumb://type=Asset&id=11561641603&w=150&h=150"})
+Duration = 3;
 plr = game:GetService("Players").LocalPlayer
 char = plr.Character
 hum = char:FindFirstChildOfClass'Humanoid'
