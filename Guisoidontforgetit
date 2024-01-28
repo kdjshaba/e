@@ -527,7 +527,7 @@ end
 
 local Player = game:GetService("Players").LocalPlayer
 
-local Anim = Animator.new(Player.Character, 2477969795)
+local Anim = Animator.new(Player.Character, 5835420080)
 Anim:Play()
 Anim.Stopped:Wait()
 print("Done!")
